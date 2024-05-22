@@ -32,7 +32,7 @@ function mostrarAprobados() {
     const alumnos = document.getElementsByClassName('alumno');
     for (const alumno of alumnos) {
         const nota = alumno.querySelector("span:nth-of-type(2)").textContent;
-        if(nota >= 5) {
+        if (nota >= 5) {
             alumno.style.display = "flex";
         } else {
             alumno.style.display = "none";
@@ -45,7 +45,7 @@ function mostrarSuspensos() {
     const alumnos = document.getElementsByClassName('alumno');
     for (const alumno of alumnos) {
         const nota = alumno.querySelector("span:nth-of-type(2)").textContent;
-        if(nota < 5) {
+        if (nota < 5) {
             alumno.style.display = "flex";
         } else {
             alumno.style.display = "none";
@@ -55,10 +55,22 @@ function mostrarSuspensos() {
 }
 
 function mostrarPorCurso() {
+    const cursoElegido = document.getElementById('curso').value;
+    if (cursoElegido === "") {
+        return;
+    }
 
+    const alumnos = document.getElementsByClassName('alumno');
+    for (const alumno of alumnos) {
+        const curso = alumno.querySelector("span:nth-of-type(3)").textContent;
+        if (curso == cursoElegido) {
+            alumno.style.display = "flex";
+        } else {
+            alumno.style.display = "none";
+        }
+        //alumno.style.display = curso == cursoElegido ? "flex" : "none";
+    }
 }
-
-
 
 document.getElementById('aprobados').addEventListener("click", mostrarAprobados);
 document.getElementById('suspensos').addEventListener("click", mostrarSuspensos);
