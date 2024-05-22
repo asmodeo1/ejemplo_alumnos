@@ -28,4 +28,32 @@ function mostrarAlumnos(nombres, notas, cursos) {
     }
 }
 
+function mostrarAprobados() {
+    const alumnos = document.getElementsByClassName('alumno');
+    for (const alumno of alumnos) {
+        const nota = alumno.querySelector("span:nth-of-type(2)").textContent;
+        if(nota >= 5) {
+            alumno.style.display = "flex";
+        } else {
+            alumno.style.display = "none";
+        }
+        //alumno.style.display = nota >= 5 ? "flex" : "none";
+    }
+}
+
+function mostrarSuspensos() {
+
+}
+
+function mostrarPorCurso() {
+
+}
+
+
+
+document.getElementById('aprobados').addEventListener("click", mostrarAprobados);
+document.getElementById('suspensos').addEventListener("click", mostrarSuspensos);
+document.getElementById('curso').addEventListener("change", mostrarPorCurso);
+
+
 mostrarAlumnos(nombres, notas, cursos);
