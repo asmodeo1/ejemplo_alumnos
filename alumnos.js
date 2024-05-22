@@ -15,6 +15,13 @@ function mostrarAlumnos(nombres, notas, cursos) {
     for (let i = 0; i < nombres.length; i++) {
         const div = document.createElement("div");
         div.classList.add("alumno");
+        if(notas[i] >= 5) {
+            div.classList.add("aprobado");
+        } else {
+            div.classList.add("suspenso");
+        }
+        // div.classList.add(notas[i] >= 5 ? "aprobado" : "suspenso");
+
         const spanNombre = document.createElement("span");
         spanNombre.textContent = nombres[i];
         div.appendChild(spanNombre);
@@ -30,40 +37,40 @@ function mostrarAlumnos(nombres, notas, cursos) {
 
 function mostrarAprobados() {
     const alumnos = document.getElementsByClassName('alumno');
+    const cursoElegido = document.getElementById('curso').value;
     for (const alumno of alumnos) {
         const nota = alumno.querySelector("span:nth-of-type(2)").textContent;
-        if (nota >= 5) {
+        const curso = alumno.querySelector("span:nth-of-type(3)").textContent;
+        if (nota >= 5 && (curso == cursoElegido || cursoElegido == "")) {
             alumno.style.display = "flex";
         } else {
             alumno.style.display = "none";
         }
-        //alumno.style.display = nota >= 5 ? "flex" : "none";
+        //alumno.style.display = nota >= 5 && ( curso == cursoElegido || cursoElegido == "") ? "flex" : "none";
     }
 }
 
 function mostrarSuspensos() {
     const alumnos = document.getElementsByClassName('alumno');
+    const cursoElegido = document.getElementById('curso').value;
     for (const alumno of alumnos) {
         const nota = alumno.querySelector("span:nth-of-type(2)").textContent;
-        if (nota < 5) {
+        const curso = alumno.querySelector("span:nth-of-type(3)").textContent;
+        if (nota < 5 && (curso == cursoElegido || cursoElegido == "")) {
             alumno.style.display = "flex";
         } else {
             alumno.style.display = "none";
         }
-        //alumno.style.display = nota >= 5 ? "flex" : "none";
+        //alumno.style.display = nota < 5 && ( curso == cursoElegido || cursoElegido == "") ? "flex" : "none";
     }
 }
 
 function mostrarPorCurso() {
     const cursoElegido = document.getElementById('curso').value;
-    if (cursoElegido === "") {
-        return;
-    }
-
     const alumnos = document.getElementsByClassName('alumno');
     for (const alumno of alumnos) {
         const curso = alumno.querySelector("span:nth-of-type(3)").textContent;
-        if (curso == cursoElegido) {
+        if (curso == cursoElegido || cursoElegido == "") {
             alumno.style.display = "flex";
         } else {
             alumno.style.display = "none";
@@ -72,9 +79,27 @@ function mostrarPorCurso() {
     }
 }
 
+function mostrarPorNombre() {
+    const cursoElegido = document.getElementById('curso').value;
+    const alumnos = document.getElementsByClassName('alumno');
+    const nombreElegido = document.getElementById('nombre').value.trim();
+    for (const alumno of alumnos) {
+        const nombre = alumno.querySelector("span:nth-of-type(1)").textContent;
+        const curso = alumno.querySelector("span:nth-of-type(3)").textContent;
+        if (nombre.startsWith(nombreElegido)  && (curso == cursoElegido || cursoElegido == "")) {
+            alumno.style.display = "flex";
+        } else {
+            alumno.style.display = "none";
+        }
+        //alumno.style.display = nombre.startsWith(nombreElegido)  && (curso == cursoElegido || cursoElegido == "") ? "flex" : "none";
+    }
+}
+
 document.getElementById('aprobados').addEventListener("click", mostrarAprobados);
 document.getElementById('suspensos').addEventListener("click", mostrarSuspensos);
 document.getElementById('curso').addEventListener("change", mostrarPorCurso);
+document.getElementById('nombre').addEventListener("keyup", mostrarPorNombre);
+
 
 
 mostrarAlumnos(nombres, notas, cursos);
