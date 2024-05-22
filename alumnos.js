@@ -42,7 +42,16 @@ function mostrarAprobados() {
 }
 
 function mostrarSuspensos() {
-
+    const alumnos = document.getElementsByClassName('alumno');
+    for (const alumno of alumnos) {
+        const nota = alumno.querySelector("span:nth-of-type(2)").textContent;
+        if(nota < 5) {
+            alumno.style.display = "flex";
+        } else {
+            alumno.style.display = "none";
+        }
+        //alumno.style.display = nota >= 5 ? "flex" : "none";
+    }
 }
 
 function mostrarPorCurso() {
